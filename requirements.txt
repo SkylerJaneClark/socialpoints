@@ -1,0 +1,4 @@
+uwsgi
+flask
+flask_sqlalchemy
+flask_pyoidc

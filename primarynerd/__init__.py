@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import UniqueConstraint
 from flask import Flask, render_template, request, session
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 import os
