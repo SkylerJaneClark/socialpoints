@@ -14,6 +14,14 @@ else:
 auth = OIDCAuthentication(app,
                           issuer=app.config['OIDC_ISSUER'],
                           client_registration_info=app.config['OIDC_CLIENT_CONFIG'])
+db = SQLAlchemy(app)
+
+class users(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    user = db.Column(db.Text)
+    def __init__ (self, user):
+        self.user = user
+        
 def get_metadata():
     uuid = str(session["userinfo"].get("sub", ""))
     uid = str(session["userinfo"].get("preferred_username", ""))
@@ -27,8 +35,9 @@ def get_metadata():
 @app.route("/")
 @auth.oidc_auth
 def hello():
+    db.create_all()
     metadata = get_metadata()
-    return render_template("base.html", metadata=metadata)
+    return render_template("base.html", metadata=metadata,)
 
 @app.route('/logout')
 @auth.oidc_logout
