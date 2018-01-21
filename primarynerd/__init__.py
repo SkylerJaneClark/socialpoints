@@ -55,6 +55,7 @@ def hello():
     user_list = []
     for user in users.query.all():
         user_list.append(fuckeries.query.order_by(fuckeries.time.desc()).filter_by(victim=user.user).first())
+    
     metadata = get_metadata()
     return render_template("index.html", metadata=metadata, user_list=user_list)
 

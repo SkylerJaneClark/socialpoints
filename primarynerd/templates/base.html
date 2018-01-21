@@ -77,7 +77,21 @@
     
 <body>
    <body>
-      {% block body %}
-      {% endblock %}
+          <div class="container">
+<div class="panel panel-primary">    
+      <div class="panel-heading" style="color: #ffffff">               
+           {{ metadata["uid"] }}
+      </div>                                                                   
+      <div class="panel-body">                                               
+            <button id="pointsButton" name="pointsButton" class="btn btn-primary center-block">redeem points</button>
+      </div>
+</div>
+</div>
+
+
+     {% block body %}
+
+
+     {% endblock %}
    </body>
 </html>
