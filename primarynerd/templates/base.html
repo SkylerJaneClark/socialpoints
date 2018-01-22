@@ -14,39 +14,35 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>
-   $(document).ready(function() {
-   $('#pointsButton').click(function(e) {
-   var btn = $(this);
-   
-   
-         e.preventDefault();
-     var now = new Date().getTime();
-     var formData = {
-   'time' : String(now)
-     };
-         $.ajax({
-               url: '/add_points',
-               contentType: 'application/json',
-               data: JSON.stringify(formData),
-               type: 'PUT',
-               success: function(data){   
-   if (JSON.parse(data)["cooldown"] == "inactive"){
-   btn.prop('disabled',true);
-   setTimeout(function(){
-   btn.prop('disabled',false);
-   })
-   $("#pointsButton").html("in cooldown")
-   $("#userpoints").html(JSON.parse(data)["currentpoints"])
-   } else {
-   alert("you're in cooldown, hold on")
-   };
-               },
-               error: function() {
-                   alert("error");
-   }
-   });
-   });
-   });
+$(document).ready(function() {
+    $('#pointsButton').click(function(e) {
+    var btn = $(this);
+
+        e.preventDefault();
+        var now = new Date().getTime();
+        var formData = {
+            'time': String(now)
+        };
+        $.ajax({
+            url: '/add_points',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            type: 'PUT',
+            success: function(data) {
+                console.log(JSON.parse(data));
+                btn.prop("disabled", true);
+                setTimeout(function() {
+                    btn.prop("disabled", false);
+                }, (parseInt(JSON.parse(data)["cooldowntime"])) * 1000);
+$("#userpoints").html(JSON.parse(data)["currentpoints"]);
+$("#currentpoints").html(JSON.parse(data)["currentpoints"]);
+            },
+            error: function() {
+                alert("error");
+            }
+        });
+    });
+});
 </script>
 </head>
 {% block nav %}
@@ -121,7 +117,7 @@
                         <div class="col-sm-10">
 			   <button id="pointsButton" name="pointsButton" class="btn btn-primary center-block" style="width: 100%">redeem points</button>
 			</div>
-          <div class="col-sm-2">
+          <div id="currentpoints" class="col-sm-2">
               your points
           </div>
         </div>

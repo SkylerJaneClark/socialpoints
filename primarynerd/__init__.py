@@ -93,7 +93,9 @@ def add_points():
                            'currentpoints':points_data,
                            'cooldowntime':dbUser.timeDelay})
     else:
-        return json.dumps({'cooldown':'active'})
- 
+        
+        return json.dumps({'cooldown':'inactive',
+                           'currentpoints':points_data,
+                           'cooldowntime':dbUser.timeDelay})
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
