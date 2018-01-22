@@ -11,14 +11,45 @@
     <link rel="manifest" href="/static/manifest.json">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('#pointsButton').click(function(e) {
+      e.preventDefault();
+  var now = new Date().getTime();
+  var formData = {
+'time' : String(now)
+  };
+      $.ajax({
+            url: '/add_points',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            type: 'PUT',
+            success: function(data){ 
+            if (JSON.parse(data)["cooldown"] == "inactive"){
+$("#pointsButton").html("in cooldown")
+$("#userpoints").html(JSON.parse(data)["currentpoints"])
 
-    
+} else {
+alert("you're in cooldown, hold on")
+};
+            },
+            error: function() {
+                alert("error");
+}
+
+
+
+});
+});
+});
+</script>
 </head>
 {% block nav %}
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" zdata-target="#navbar"
                         aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -82,16 +113,19 @@
       <div class="panel-heading" style="color: #ffffff">               
            {{ metadata["uid"] }}
       </div>                                                                   
-      <div class="panel-body">                                               
-            <button id="pointsButton" name="pointsButton" class="btn btn-primary center-block">redeem points</button>
+      <div class="panel-body">
+        <div class = "row">
+	  <div class = "col-sm-10">
+              <button id="pointsButton" class="cooldown" name="pointsButton" class="btn btn-primary center-block" style="width: 100%">redeem points</button>
+	  </div>
+	  <div class="col-sm-2">
+	      your points
+	  </div>
+	</div>
+	</div>
       </div>
 </div>
-</div>
-
-
      {% block body %}
-
-
      {% endblock %}
    </body>
 </html>
