@@ -11,8 +11,8 @@
 		 <div class ="row">
 		   <div class = "col-sm-2" style="height:60px">
 		     <label>
-		       <input type = "checkbox" name={{user.victim}} value = "small"/>
-		       <img src="https://profiles.csh.rit.edu/image/"+{{ user.victim }} class="img-circle"width="60" height = "60"  alt="profile" onerror="this.onerror=null;this.src='https://profiles.csh.rit.edu/image/wgahnagl';">
+		       <input type = "checkbox" id={{user.victim}} name="userButtons" value = "small"/>
+		       <img src="https://profiles.csh.rit.edu/image/"+{{ user.victim }} class="img-circle"width="60" height = "60" id={{user.victim}}  alt="profile" onerror="this.onerror=null;this.src='https://profiles.csh.rit.edu/image/wgahnagl';">
 		       </label>
 		   </div>
 		   <div class = "col-sm-5" style="height:60px">
@@ -36,11 +36,10 @@
                   controls                                                            
                </div> 
                <div class="panel-body">
-
-		 <div data-toggle="buttons" style="padding: 10px 10px">
+		 <div data-toggle="buttons" style="padding: 9px 10px">
                  {% for ability in abilities_list%}
-		 <label class="btn btn-primary center-block" style="width:100%">
-		   <input type="radio" name={{ability}}>
+		 <label name="abilityButtons" class="btn btn-primary center-block" style="width:100%">
+			 <input type="radio" name={{ability}}>
 		   {{ability}}
 		 </label> <br>
                  {% endfor %}

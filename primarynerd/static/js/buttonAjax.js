@@ -25,4 +25,16 @@ $("#currentpoints").html(JSON.parse(data)["currentpoints"]);
             }
         });
     });
-});
+	$('[name="abilityButtons"]').each(function(){
+		$(this).click(function(){
+			console.log($(this).hasClass("active"));
+		});
+	});
+
+	$('[name="userButtons"]').each(function(){
+		$(this).click(function(){
+			console.log($(this).is(":checked"));
+		});
+
+		});
+	});
