@@ -41,6 +41,15 @@ class users(db.Model):
         self.emojis = emojis
         self.timeDelay = timeDelay
         self.pointsPerClick = pointsPerClick
+
+class abilities(db.Model):
+    user = db.Column(db.String(50),primary_key = True)
+    bloodForTheBloodGod = db.Column(db.Boolean)
+    removePoint = db.Column(db.Boolean)
+    def __init__ (self, user, bloodForTheBloodGod, removePoint):
+        self.user = user
+        self.bloodForTheBloodGod = bloodForTheBloodGod
+        self.removePoint = removePoint
         
 def get_metadata():
     uuid = str(session["userinfo"].get("sub", ""))
@@ -57,10 +66,18 @@ def get_metadata():
 def hello():
     db.create_all()
     user_list = []
+    abilities_dict = {}
+    metadata = get_metadata()  
+    #currentUser = get_metadata()["uid"]
+    currentUser = "god"
+    #TODO: set this to organize by most recent fuckery for each user.
     for user in users.query.all():
-        user_list.append(fuckeries.query.order_by(fuckeries.time.desc()).filter_by(victim=user.user).first())    
-    metadata = get_metadata()
-    return render_template("index.html", metadata=metadata, user_list=user_list)
+        user_list.append(fuckeries.query.order_by(fuckeries.time.desc()).filter_by(victim=user.user).first())
+    ability = abilities.query.filter_by(user=currentUser)[0]    
+    abilities_dict = dict((col, getattr(ability, col)) for col in ability.__table__.columns.keys())
+    abilities_list = [key for key,val in abilities_dict.items() if val==True]
+    
+    return render_template("index.html", metadata=metadata, user_list=user_list, abilities_list = abilities_list )
 
 @app.route('/logout')
 @auth.oidc_logout
@@ -70,6 +87,7 @@ def logout():
 @app.route('/add_points', methods = ['PUT'])
 def add_points():
     data = json.loads(request.data.decode('utf-8'))
+    #TODO: remove god and set currentuser as the actual user 
     #currentuser = get_metadata()["uid"]
     currentuser = "god"
     dbUser = users.query.filter_by(user=currentuser).first()
@@ -94,7 +112,7 @@ def add_points():
                            'cooldowntime':dbUser.timeDelay})
     else:
         
-        return json.dumps({'cooldown':'inactive',
+        return json.dumps({'cooldown':'active',
                            'currentpoints':points_data,
                            'cooldowntime':dbUser.timeDelay})
 if __name__ == "__main__":

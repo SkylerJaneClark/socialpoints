@@ -3,16 +3,17 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-8 ">
-
             <div class = "panel panel-primary" style="width: auto;"  >
-               <div class = "panel-heading" style="color: #ffffff">                                     
-                  users                                                                              
+               <div class = "panel-heading" style="color: #ffffff">                                                       users                                                          
                </div>
                <div class = "panel-body">                                                            
                  {% for user in user_list%}
 		 <div class ="row">
 		   <div class = "col-sm-2" style="height:60px">
-                     <img src="https://profiles.csh.rit.edu/image/"+{{ user.victim }} class="img-circle"width="60" height = "60"  style="margin-right:10px" alt="profile" onerror="this.onerror=null;this.src='https://profiles.csh.rit.edu/image/wgahnagl';">
+		     <label>
+		       <input type = "checkbox" name={{user.victim}} value = "small"/>
+		       <img src="https://profiles.csh.rit.edu/image/"+{{ user.victim }} class="img-circle"width="60" height = "60"  alt="profile" onerror="this.onerror=null;this.src='https://profiles.csh.rit.edu/image/wgahnagl';">
+		       </label>
 		   </div>
 		   <div class = "col-sm-5" style="height:60px">
 		     <div style="position:relative; top:50%; transform:translateY(-50%)">
@@ -30,13 +31,24 @@
 	    </div>
   </div>
     <div class="col-sm-4">
-            <div class="panel panel-primary" style="width: auto" position ="absolute">
+            <div class="panel panel-primary" style="width: auto" position="absolute">
                <div class="panel-heading" style="color: #ffffff">               
                   controls                                                            
-               </div>
-               <div class="panel-body">                                               
-                  hello
-            </div>
+               </div> 
+               <div class="panel-body">
+
+		 <div data-toggle="buttons" style="padding: 10px 10px">
+                 {% for ability in abilities_list%}
+		 <label class="btn btn-primary center-block" style="width:100%">
+		   <input type="radio" name={{ability}}>
+		   {{ability}}
+		 </label> <br>
+                 {% endfor %}
+		 </div>
+		 <button id="pointsButton" name="fire" class="btn btn-primary center-block">
+		   fire
+		 </button>		 
+	   </div>
          </div>
     </div>
     </div>
