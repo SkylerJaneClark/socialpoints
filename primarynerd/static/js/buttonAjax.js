@@ -26,7 +26,7 @@ $("#currentpoints").html(JSON.parse(data)["currentpoints"]);
         });
     });
 	$('[name="abilityButtons"]').each(function(){
-		$(this).click(function(){
+		$(this).click(function(){	
 			console.log($(this).hasClass("active"));
 		});
 	});
@@ -35,6 +35,8 @@ $("#currentpoints").html(JSON.parse(data)["currentpoints"]);
 		$(this).click(function(){
 			console.log($(this).is(":checked"));
 		});
-
-		});
 	});
+	$("#fireButton").click(function(e){
+		console.log("ATTACK")
+	});
+});
