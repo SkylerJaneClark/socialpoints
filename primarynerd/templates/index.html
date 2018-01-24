@@ -38,7 +38,7 @@
                <div class="panel-body">
 		 <div data-toggle="buttons" style="padding: 9px 10px">
                  {% for ability in abilities_list%}
-		 <label name="abilityButtons" class="btn btn-primary center-block" style="width:100%">
+		 <label name="abilityButtons" class="btn btn-primary center-block" style="width:100%" id={{ability}}>
 			 <input type="radio" name={{ability}}>
 		   {{ability}}
 		 </label> <br>

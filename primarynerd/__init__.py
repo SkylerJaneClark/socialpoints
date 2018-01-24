@@ -84,6 +84,18 @@ def hello():
 def logout():
     return redirect(url_for('hello'), 302)
 
+
+@app.route('/send_attack', methods = ['PUT'])
+def send_attack():
+    data = json.loads(request.data.decode('utf-8'))
+    #currentuser = get_metadata()["uid"]
+    currentuser = "god"
+    users_affected = data['users_affected']
+    ability_used = data['ability_used']
+    return json.dumps({
+        "shit":"shit"
+        })
+
 @app.route('/add_points', methods = ['PUT'])
 def add_points():
     data = json.loads(request.data.decode('utf-8'))

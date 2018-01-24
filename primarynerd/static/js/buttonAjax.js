@@ -21,22 +21,46 @@ $("#userpoints").html(JSON.parse(data)["currentpoints"]);
 $("#currentpoints").html(JSON.parse(data)["currentpoints"]);
             },
             error: function() {
-                alert("error");
+                alert("you're still in cooldown. wait.");
             }
         });
     });
+
+var users_affected = [];
+var ability_used = "";
 	$('[name="abilityButtons"]').each(function(){
 		$(this).click(function(){	
-			console.log($(this).hasClass("active"));
+			ability_used = $(this).attr('id');
 		});
 	});
 
 	$('[name="userButtons"]').each(function(){
 		$(this).click(function(){
-			console.log($(this).is(":checked"));
+			if ($(this).is(":checked")==false){
+				users_affected.splice([users_affected.indexOf($(this).attr('id'))],1);
+
+			}else{
+				users_affected.push($(this).attr('id'));
+			}
 		});
 	});
-	$("#fireButton").click(function(e){
-		console.log("ATTACK")
+$("#fireButton").click(function(e){	
+	var attackData = {
+		'users_affected' : users_affected,
+		'ability_used' : ability_used
+	};
+	
+	$.ajax({
+		url:"/send_attack",
+		contentType: "application/json",
+		data:JSON.stringify(attackData),
+		type: "PUT",
+		success:function(data){
+			console.log(JSON.parse(data));
+		},
+		error: function(){
+			alert("error");
+		}
+	});
 	});
 });
