@@ -1,56 +1,10 @@
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import UniqueConstraint
-from flask import Flask, jsonify, render_template, request, session
-from flask_pyoidc.flask_pyoidc import OIDCAuthentication
-from sqlalchemy import ForeignKey
-from datetime import datetime, timedelta
-import json
-import os
+from pythonConfig import *
+from flask_pyoidc.flask_pyoidc import OIDCAuthentication                                      
+from game import start
 
-app = Flask(__name__)
-
-if os.path.exists(os.path.join(os.getcwd(), "config.py")):
-    app.config.from_pyfile(os.path.join(os.getcwd(), "config.py"))
-else:
-    app.config.from_pyfile(os.path.join(os.getcwd(), "config.env.py"))
-
-auth = OIDCAuthentication(app,
-                          issuer=app.config['OIDC_ISSUER'],
-                          client_registration_info=app.config['OIDC_CLIENT_CONFIG'])
-db = SQLAlchemy(app)
-
-class fuckeries(db.Model):
-    victim = db.Column(db.String(50), ForeignKey("users.user"), primary_key = True)
-    actor = db.Column(db.String(50), ForeignKey("users.user"), primary_key = True)
-    points = db.Column(db.Integer)
-    time = db.Column(db.DateTime, primary_key = True)
-    def __init__ (self, victim, actor, points, time):
-        self.victim = victim
-        self.actor = actor
-        self.points = points
-        self.time = time
-        
-
-class users(db.Model):
-    user = db.Column(db.String(50), primary_key = True)
-    emojis = db.Column(db.String(2000))
-    timeDelay = db.Column(db.Integer)
-    pointsPerClick = db.Column(db.Integer)
-    def __init__ (self, user, emojis, timeDelay, pointsPerClick):
-        self.user = user
-        self.emojis = emojis
-        self.timeDelay = timeDelay
-        self.pointsPerClick = pointsPerClick
-
-class abilities(db.Model):
-    user = db.Column(db.String(50),primary_key = True)
-    bloodForTheBloodGod = db.Column(db.Boolean)
-    removePoint = db.Column(db.Boolean)
-    def __init__ (self, user, bloodForTheBloodGod, removePoint):
-        self.user = user
-        self.bloodForTheBloodGod = bloodForTheBloodGod
-        self.removePoint = removePoint
-        
+auth = OIDCAuthentication(app,                                                                
+                          issuer=app.config['OIDC_ISSUER'],                                   
+                          client_registration_info=app.config['OIDC_CLIENT_CONFIG'])  
 def get_metadata():
     uuid = str(session["userinfo"].get("sub", ""))
     uid = str(session["userinfo"].get("preferred_username", ""))
@@ -59,7 +13,6 @@ def get_metadata():
         "uid": uid,
     }
     return metadata
-
 
 @app.route("/")
 @auth.oidc_auth
@@ -92,9 +45,7 @@ def send_attack():
     currentuser = "god"
     users_affected = data['users_affected']
     ability_used = data['ability_used']
-    return json.dumps({
-        "shit":"shit"
-        })
+    return(game.start(currentuser, users_affected, ability_used ))
 
 @app.route('/add_points', methods = ['PUT'])
 def add_points():
