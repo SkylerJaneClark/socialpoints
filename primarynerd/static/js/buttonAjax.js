@@ -5,20 +5,22 @@ $(document).ready(function() {
         var now = new Date().getTime();
         var formData = {
             'time': String(now)
-        };
-        $.ajax({
+        };    
+		    
+	$.ajax({
             url: '/add_points',
             contentType: 'application/json',
             data: JSON.stringify(formData),
             type: 'PUT',
             success: function(data) {
-                console.log(JSON.parse(data));
+            responseData = JSON.parse(data);
+		console.log(responseData);
                 btn.prop("disabled", true);
                 setTimeout(function() {
                     btn.prop("disabled", false);
-                }, (parseInt(JSON.parse(data)["cooldowntime"])) * 1000);
-$("#userpoints").html(JSON.parse(data)["currentpoints"]);
-$("#currentpoints").html(JSON.parse(data)["currentpoints"]);
+                }, (parseInt(responseData["cooldowntime"])) * 1000);
+	document.getElementById(responseData["userpoints"]).innerHTML = (responseData["currentpoints"]);
+	document.getElementById(responseData["userlistpoints"]).innerHTML = (responseData["currentpoints"]);
             },
             error: function() {
                 alert("you're still in cooldown. wait.");
@@ -44,11 +46,17 @@ var ability_used = "";
 			}
 		});
 	});
+
+
+
+
 $("#fireButton").click(function(e){	
 	var attackData = {
 		'users_affected' : users_affected,
 		'ability_used' : ability_used
 	};
+
+	console.log(attackData)
 	
 	$.ajax({
 		url:"/send_attack",
@@ -56,11 +64,19 @@ $("#fireButton").click(function(e){
 		data:JSON.stringify(attackData),
 		type: "PUT",
 		success:function(data){
-			console.log(JSON.parse(data));
+			result = JSON.parse(data);
+			$.each(result, function(k,v){
+				if (document.getElementById(k+"listpoints") != null){
+				document.getElementById(k+"listpoints").innerHTML = (v);
+				}
+				console.log(k + ' : ' +v);
+			});
+			alert(result["result"]);
 		},
 		error: function(){
 			alert("error");
 		}
+		});
 	});
-	});
+
 });

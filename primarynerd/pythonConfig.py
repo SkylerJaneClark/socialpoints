@@ -41,7 +41,9 @@ class abilities(db.Model):
     user = db.Column(db.String(50), ForeignKey("users.user"), primary_key = True)
     bloodForTheBloodGod = db.Column(db.Boolean)
     removePoint = db.Column(db.Boolean)
-    def __init__ (self, user, bloodForTheBloodGod, removePoint):
+    equalExchange = db.Column(db.Boolean)
+    def __init__ (self, user, bloodForTheBloodGod, removePoint, equalExchange):
         self.user = user
         self.bloodForTheBloodGod = bloodForTheBloodGod
         self.removePoint = removePoint
+        self.equalExchange = equalExchange

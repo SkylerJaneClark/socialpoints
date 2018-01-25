@@ -1,4 +1,4 @@
-from pythonConfig import *
+65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M65;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27M64;73;27Mfrom pythonConfig import *
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication                                      
 from game import start
 
@@ -45,7 +45,6 @@ def send_attack():
     currentuser = "god"
     users_affected = data['users_affected']
     ability_used = data['ability_used']
-
     return(game.start(currentuser, users_affected, ability_used ))
 
 @app.route('/add_points', methods = ['PUT'])

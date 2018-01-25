@@ -16,12 +16,12 @@
 		       </label>
 		   </div>
 		   <div class = "col-sm-5" style="height:60px">
-		     <div style="position:relative; top:50%; transform:translateY(-50%)">
-		       {{ user.victim }}
-		     </div>
+			   <div style="position:relative; top:50%; transform:translateY(-50%)"id={{user.victim}}page class="userPages" >
+					   {{ user.victim }}
+				   </div>
 		   </div>
 		   <div class = "col-sm-5" style="height:60px">
-		     <div style="position:relative; top:50%; transform:translateY(-50%)" id = "userpoints">
+			   <div style="position:relative; top:50%; transform:translateY(-50%)" id = {{ user.victim }}listpoints >
 		       {{ user.points }}
 		     </div>
                    </div>
