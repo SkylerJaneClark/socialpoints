@@ -14,6 +14,32 @@ def get_metadata():
     }
     return metadata
 
+
+def create_user(user):
+    victim_data = user
+    time_data =(datetime.now()).strftime('%Y-%m-%d %H:%M:%S')
+    actor_data="god"
+    points_data=0
+
+    fuckery = fuckeries (victim=victim_data, time=time_data, actor=actor_data, points=points_data)
+    user = users (user = victim_data, emojis=None)
+    db.session.add(user)
+    db.session.flush()
+    db.session.commit()
+
+    db.session.add(fuckery)
+    db.session.flush()
+    db.session.commit()
+    
+
+@app.route("/user/<variable>", methods=['GET'])
+def userroute(variable):
+    metadata = get_metadata()
+    events = fuckeries.query.order_by(fuckeries.time.desc()).filter_by(victim=variable).all()
+
+    return render_template("userdata.html", metadata=metadata, variable=variable, events=events)
+    
+
 @app.route("/")
 @auth.oidc_auth
 def hello():
@@ -23,13 +49,16 @@ def hello():
     metadata = get_metadata()  
     #currentUser = get_metadata()["uid"]
     currentUser = "god"
+
+    print("hey")
+
+
     #TODO: set this to organize by most recent fuckery for each user.
     for user in users.query.all():
         user_list.append(fuckeries.query.order_by(fuckeries.time.desc()).filter_by(victim=user.user).first())
     ability = abilities.query.filter_by(user=currentUser)[0]    
     abilities_dict = dict((col, getattr(ability, col)) for col in ability.__table__.columns.keys())
-    abilities_list = [key for key,val in abilities_dict.items() if val==True]
-    print(abilities_dict)    
+    abilities_list = [key for key,val in abilities_dict.items() if val==True]   
     return render_template("index.html", metadata=metadata, user_list=user_list, abilities_list = abilities_list )
 
 @app.route('/logout')

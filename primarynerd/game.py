@@ -1,6 +1,9 @@
 from pythonConfig import *
 
-removePointsValue = 1
+equalExchangeValue = 1
+
+
+
 
 def start(user, users_affected, ability_used ):
     if((user == "" or user == None) or (users_affected==[] or users_affected == None) or (ability_used == [] or ability_used == None)): 
@@ -12,6 +15,8 @@ def start(user, users_affected, ability_used ):
         return json.dumps({"result":"oh god that's my bad, that button don't work"})
 
 
+
+
 def equalExchange(user, users_affected, ability_used):
     fuckery_data = {}
     fuckery_data["result"]="success"
@@ -21,22 +26,22 @@ def equalExchange(user, users_affected, ability_used):
             
         actor_data = users.query.filter_by(user=user).first().user
         victim_data = users.query.filter_by(user=person).first().user
-        victim_points_data = victim_points - removePointsValue
-        user_points_data = user_points -removePointsValue
+        victim_points_data = victim_points - equalExchangeValue
+        user_points_data = user_points -equalExchangeValue
         time_data = (datetime.now()).strftime('%Y-%m-%d %H:%M:%S')
         fuckery_data[victim_data] = victim_points_data  
 
+        if user_points_data <= 0:
+            return json.dumps({"result": "you don't have enough points to pay for this action"})
+
         if actor_data == victim_data:
-            print("users are the same")
-            user_points_data -= removePointsValue
+            user_points_data -= equalExchangeValue
             fuckery_data[victim_data] = user_points_data
             cost = fuckeries(victim=actor_data, actor=victim_data, points=user_points_data, time=time_data)
             db.session.add(cost)
             db.session.flush()
             db.session.commit()
             return json.dumps(fuckery_data)
-
-        print("users are not the same")
     
         cost = fuckeries(victim=actor_data, actor=victim_data, points=user_points_data, time=time_data)
         attack = fuckeries(victim=victim_data, actor=actor_data, points=victim_points_data, time=time_data)

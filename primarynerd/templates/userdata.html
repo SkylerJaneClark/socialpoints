@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container">
+<div class = "panel panel-primary" style="width: auto;" >
+	<div class = "panel-heading" style="color: #ffffff"> {{variable}}  </div>
+	<div class="panel-body">
+	<div class="eventscontainer">
+	{%for event in events %}
+	 <div class ="row">
+		 <div class="events">
+		   <div class = "col-sm-2" style="height:60px">
+		       <img src="https://profiles.csh.rit.edu/image/"+{{ event.victim }} class="img-circle"width="60" height = "60" id={{event.victim}}  alt="profile" onerror="this.onerror=null;this.src='https://profiles.csh.rit.edu/image/wgahnagl';">
+		   </div>
+		   <div class = "col-sm-2" style="height:60px">
+		     <div style="position:relative; top:50%; transform:translateY(-50%)">
+		       {{ event.victim }}
+		     </div>
+		   </div>
+		 <div class = "col-sm-2" style="height:60px">
+		  	
+			 attacker:
+			 <img src="https://profiles.csh.rit.edu/image/"+{{ event.victim }} class="img-circle"width="60" height = "60" id={{event.victim}}  alt="profile" onerror="this.onerror=null;this.src='https://profiles.csh.rit.edu/image/wgahnagl';">
+		   </div>
+		   <div class = "col-sm-2" style="height:60px">
+		     <div style="position:relative; top:50%; transform:translateY(-50%)">
+		      	 {{ event.actor }}
+		     </div>
+		</div>
+
+
+		   <div class = "col-sm-2" style="height:60px">
+		     <div style="position:relative; top:50%; transform:translateY(-50%)">
+		       {{ event.points }}
+		     </div>
+                   </div>
+		   <div class = "col-sm-2" style="height:60px">
+			 <div style="position:relative; top:50%; transform:translateY(-50%)">
+		       {{ event.time }}
+			 </div>
+		   </div>
+		 </div>
+	 </div> 
+	{%endfor%}
+	</div>
+	<button id="loadmore" name="loadmore" class="btn btn-primary center-block"> load more </div>
+
+</div>
+
+</div>
+</div>
+{% endblock %}

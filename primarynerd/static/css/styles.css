@@ -11,7 +11,9 @@ label > input + img{ /* IMAGE STYLES */
 label > input:checked + img { /* (RADIO CHECKED) IMAGE STYLES */
   border:2px solid #f00;
 }
-
+.events{
+display:none;
+}
 
 body {
     margin-top: 100px;

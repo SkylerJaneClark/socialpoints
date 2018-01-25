@@ -1,5 +1,11 @@
 $(document).ready(function() {
-    $('#pointsButton').click(function(e) {
+
+$(".events").slice(0,4).show();	
+$("#loadmore").click(function(e){
+	$(".events:hidden").slice(0,4).show()
+});	
+	
+	$('#pointsButton').click(function(e) {
     var btn = $(this);
         e.preventDefault();
         var now = new Date().getTime();
@@ -46,9 +52,6 @@ var ability_used = "";
 			}
 		});
 	});
-
-
-
 
 $("#fireButton").click(function(e){	
 	var attackData = {
