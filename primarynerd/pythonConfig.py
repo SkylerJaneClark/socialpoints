@@ -7,6 +7,7 @@ import json
 import os
 
 app = Flask(__name__)
+
 if os.path.exists(os.path.join(os.getcwd(), "config.py")):
     app.config.from_pyfile(os.path.join(os.getcwd(), "config.py"))
 else:

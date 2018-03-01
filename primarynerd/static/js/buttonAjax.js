@@ -73,7 +73,8 @@ $("#fireButton").click(function(e){
 				document.getElementById(k+"listpoints").innerHTML = (v);
 				}
 				console.log(k + ' : ' +v);
-			});
+			})
+
 			alert(result["result"]);
 		},
 		error: function(){
